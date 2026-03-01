@@ -1,0 +1,44 @@
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int k, int m) {
+        int n = nums.size();
+        unordered_map<int, int> freqGood;
+        unordered_map<int, int> freqDistinct;
+
+        int r = 0;
+        int s1 = 0, s2 = 0, goodCnt = 0;
+
+        long long ans = 0;
+
+        while (r < n) {
+            freqGood[nums[r]]++;
+            freqDistinct[nums[r]]++;
+            if (freqGood[nums[r]] == m) {
+                goodCnt++;
+            }
+            while (freqDistinct.size() > k) {
+                freqDistinct[nums[s1]]--;
+                if (freqDistinct[nums[s1]] == 0) {
+                    freqDistinct.erase(
+                        nums[s1]); 
+                }
+                s1++;
+            }
+
+            while (goodCnt >= k) {
+
+                freqGood[nums[s2]]--;
+                if (freqGood[nums[s2]] == m - 1) {
+                    goodCnt--;
+                }
+                s2++;
+            }
+            if (s2 > s1) {
+                ans += s2 - s1;
+            }
+            r++;
+        }
+
+        return ans;
+    }
+};
