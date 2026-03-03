@@ -14,18 +14,8 @@ public:
         if (!head || !head->next)
             return head;
         ListNode* curr;
-
-        while (head && head->next && head->val == head->next->val) {
-            int val = head->val;
-            while (head && head->val == val) {
-                head = head->next;
-            }
-        }
-        if (!head || !head->next)
-            return head;
         curr = head;
-        ListNode* prev = head;
-        curr = prev->next;
+        ListNode* prev = NULL;
         while (curr) {
             while (curr && curr->next && curr->val == curr->next->val) {
                 int val = curr->val;
@@ -33,6 +23,9 @@ public:
                     curr = curr->next;
                 }
             }
+            if(!prev){
+                head = curr;
+            }else
             prev->next = curr;
             if (curr) {
 
